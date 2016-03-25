@@ -16,7 +16,7 @@ Copyright (c) 2012-2013 Sasha Koss & Rico Sta. Cruz
   $document = $(document);
 
   $.turbo = {
-    version: '2.1.0',
+    version: '3.0.0',
     isReady: false,
     use: function(load, fetch) {
       return $document.off('.turbo').on("" + load + ".turbo", this.onLoad).on("" + fetch + ".turbo", this.onFetch);
@@ -44,6 +44,6 @@ Copyright (c) 2012-2013 Sasha Koss & Rico Sta. Cruz
 
   $.turbo.register();
 
-  $.turbo.use('page:load', 'page:fetch');
+  $.turbo.use('turbolinks:load', 'turbolinks:request-start');
 
 }).call(this);

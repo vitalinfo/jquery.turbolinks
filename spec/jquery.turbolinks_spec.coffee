@@ -59,6 +59,7 @@ describe '$ Turbolinks', ->
       $(document).trigger 'turbolinks:load'
 
     describe '$.turbo.use', ->
+
       beforeEach ->
         $.turbo.use('turbolinks:load', 'turbolinks:request-start')
 
