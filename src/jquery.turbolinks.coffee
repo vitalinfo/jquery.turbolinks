@@ -46,4 +46,4 @@ $.turbo =
 
 # Use with Turbolinks.
 $.turbo.register()
-$.turbo.use('page:load', 'page:fetch')
+$.turbo.use('turbolinks:load', 'turbolinks:request-start')

@@ -32,7 +32,7 @@ describe '$ Turbolinks', ->
   # Simulate a reset.
   beforeEach ->
     $.turbo.isReady = false
-    $.turbo.use 'page:load', 'page:fetch'
+    $.turbo.use 'turbolinks:load', 'turbolinks:request-start'
     $(document).off('turbo:ready')
 
   describe "DOM isn't ready", ->
@@ -43,10 +43,10 @@ describe '$ Turbolinks', ->
 
     it '''
          should trigger callbacks passed to
-         `$()` and `$.ready()` when page:load
+         `$()` and `$.ready()` when turbolinks:load
          event fired
        ''', ->
-         $(document).trigger('page:load')
+         $(document).trigger('turbolinks:load')
 
          callback1.should.have.been.calledOnce
          callback2.should.have.been.calledOnce
@@ -56,23 +56,23 @@ describe '$ Turbolinks', ->
         $$.fn.should.be.an.object
         done()
 
-      $(document).trigger 'page:load'
+      $(document).trigger 'turbolinks:load'
 
     describe '$.turbo.use', ->
       beforeEach ->
-        $.turbo.use('page:load', 'page:fetch')
+        $.turbo.use('turbolinks:load', 'turbolinks:request-start')
 
-      it 'should unbind default (page:load) event', ->
+      it 'should unbind default (turbolinks:load) event', ->
         $.turbo.use('other1', 'other2')
 
-        $(document).trigger('page:load')
+        $(document).trigger('turbolinks:load')
 
         callback1.should.have.not.been.called
         callback2.should.have.not.been.called
 
       it 'should bind ready to passed function', ->
         $(document)
-          .trigger('page:load')
+          .trigger('turbolinks:load')
           .trigger('page:change')
 
         callback1.should.have.been.calledOnce
@@ -81,45 +81,45 @@ describe '$ Turbolinks', ->
     describe '$.setFetchEvent', ->
 
       beforeEach ->
-        $.turbo.use('page:load', 'page:fetch')
+        $.turbo.use('turbolinks:load', 'turbolinks:request-start')
         $.turbo.isReady = true
 
-      it 'should unbind default (page:fetch) event', ->
-        $.turbo.use('page:load', 'random_event_name')
-        $(document).trigger('page:fetch')
+      it 'should unbind default (turbolinks:request-start) event', ->
+        $.turbo.use('turbolinks:load', 'random_event_name')
+        $(document).trigger('turbolinks:request-start')
         $.turbo.isReady.should.to.be.true
 
       it 'should bind passed fetch event', ->
-        $.turbo.use('page:load', 'page:loading')
-        $(document).trigger('page:loading')
+        $.turbo.use('turbolinks:load', 'turbolinks:loading')
+        $(document).trigger('turbolinks:loading')
         $.turbo.isReady.should.to.be.false
 
   describe 'DOM is ready', ->
 
     beforeEach ->
-      $.turbo.use('page:load', 'page:fetch')
+      $.turbo.use('turbolinks:load', 'turbolinks:request-start')
       $.turbo.isReady = true
 
     it 'should call trigger right after add to waiting list', ->
       $(callback = sinon.spy())
       callback.should.have.been.calledOnce
 
-    it 'should not call trigger after page:fetch and before page:load', ->
-      $(document).trigger('page:fetch')
+    it 'should not call trigger after turbolinks:request-start and before turbolinks:load', ->
+      $(document).trigger('turbolinks:request-start')
       $(callback1 = sinon.spy())
       callback1.should.have.not.been.called
 
-      $(document).trigger('page:load')
+      $(document).trigger('turbolinks:load')
       $(callback2 = sinon.spy())
       callback2.should.have.been.calledOnce
 
-    it 'should call trigger after a subsequent page:fetch and before page:load', ->
-      $(document).trigger('page:fetch')
-      $(document).trigger('page:load')
+    it 'should call trigger after a subsequent turbolinks:request-start and before turbolinks:load', ->
+      $(document).trigger('turbolinks:request-start')
+      $(document).trigger('turbolinks:load')
       $(callback1 = sinon.spy())
       callback1.should.have.been.calledOnce
-      $(document).trigger('page:fetch')
-      $(document).trigger('page:load')
+      $(document).trigger('turbolinks:request-start')
+      $(document).trigger('turbolinks:load')
       callback1.should.have.been.calledTwice
 
     it 'should pass $ as the first argument to callbacks', (done) ->
