@@ -13,8 +13,8 @@
     "chai":          "~1.9.1",
     "sinon":         "~1.10.3",
     "sinon-chai":    "~2.5.0",
-    "jquery":        "~2.1.1",
-    "jsdom":         "~1.0.0-pre.4"
+    "jquery":        "~2.2.2",
+    "jsdom":         "~8.1.0"
   },
 
   "license": "MIT",
