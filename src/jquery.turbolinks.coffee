@@ -12,6 +12,7 @@ $document = $(document)
 $.turbo =
   version: '3.0.0'
 
+  isFirst: true
   isReady: false
 
   # Hook onto the events that Turbolinks triggers.
@@ -28,7 +29,8 @@ $.turbo =
 
   onLoad: ->
     $.turbo.isReady = true
-    $document.trigger('turbo:ready')
+    $document.trigger('turbo:ready') unless $.turbo.isFirst
+    $.turbo.isFirst = false
 
   onFetch: ->
     $.turbo.isReady = false
