@@ -2,3 +2,6 @@ node_modules
 *.gem
 Gemfile.lock
 .ruby-version
+.ruby-gemset
+.idea
+package.json
